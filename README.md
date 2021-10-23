@@ -142,7 +142,7 @@ To mitigate against SQL injection attacks, every SQLite query in my Python code 
 ## Route Documentation
 
 ### Index
-    #### GET Only
+#### GET Only
     1. Determine if user has any budgets
     2. What budget the user was viewing during their last session
     3. Perform category goal resets based on due date
@@ -151,7 +151,7 @@ To mitigate against SQL injection attacks, every SQLite query in my Python code 
 
 
 ### Index / Usage
-    #### POST Only
+#### POST Only
     1. Add budget groups
        - Perform basic user input validation
     2. Add categories for each group
@@ -171,118 +171,118 @@ To mitigate against SQL injection attacks, every SQLite query in my Python code 
 
 
 ### Login
-    #### POST
+#### POST
     1. Validate that username exists in *users* table
     2. Uses Werkzeug utility to validate hashed password
     3. Set session cookies into filesystem
     4. Welcome first-time user with unique flashed message
     5. Welcome revisiting users by their first name
 
-    #### GET
+#### GET
     1. Render template
 
 
 ### Goal Check
 #### POST Only
-Goal resetting is performed within the Index route, allowing multiple routes to update goals for reset scheduling, while isolating
-the execution to a single route. The Goal Check route performs the following:
-1. Loop through each category in the budget
-2. Check if a due *day* exists
-3. Check if goal due day and month has passed
-4. Iterate due *month* if passed
-5. Check effects of due day edits
-6. Update category "reset" SQLite field to True or False
-7. Redirect to Index route
+    Goal resetting is performed within the Index route, allowing multiple routes to update goals for reset scheduling, while isolating
+    the execution to a single route. The Goal Check route performs the following:
+    1. Loop through each category in the budget
+    2. Check if a due *day* exists
+    3. Check if goal due day and month has passed
+    4. Iterate due *month* if passed
+    5. Check effects of due day edits
+    6. Update category "reset" SQLite field to True or False
+    7. Redirect to Index route
 
 
 ### Register
 #### POST
-1. Request and validate first & last name, email, username, password, & pw confirmation
-   - Use Regex to validate email
-   - Make sure username and email don't already exist in the database
-2. Hash the user's password using the Werkzeug utility
-3. Render registration date using datetime library
-4. Create user in *user* table
+    1. Request and validate first & last name, email, username, password, & pw confirmation
+       - Use Regex to validate email
+       - Make sure username and email don't already exist in the database
+    2. Hash the user's password using the Werkzeug utility
+    3. Render registration date using datetime library
+    4. Create user in *user* table
 
 #### GET
-1. Render template
+    1. Render template
 
 
 ### Expense
 #### POST
-1. Request and validate expense amount, payee, category, date, and note/memo
-2. Check for sufficient funds in category
-3. Check if category has bee fully funded
-4. Check if category has been fully spent as a result of the transaction
-5. Add payee to *payees* table if payee is new
-6. If payee exists, update payee's transaction count, total spent, and last (this) transaction date
-7. Update budgets, groups, categories, and transactions tables
+    1. Request and validate expense amount, payee, category, date, and note/memo
+    2. Check for sufficient funds in category
+    3. Check if category has bee fully funded
+    4. Check if category has been fully spent as a result of the transaction
+    5. Add payee to *payees* table if payee is new
+    6. If payee exists, update payee's transaction count, total spent, and last (this) transaction date
+    7. Update budgets, groups, categories, and transactions tables
 
 #### GET
-1. Pass user's payees and categories to the HTML form
+    1. Pass user's payees and categories to the HTML form
 
 
 ### Allocate
 #### POST
-1. Request and validate To & From categories, note/memo, and date
-2. Set allocation amount
-   - Check if the request is coming from allocate.html or from the "fully fund" money symbol displayed next to category names
-   - If symbol: calculate how much is needed to fully fund
-   - Otherwise set amount to user input from allocate.html
-3. Treat *Deposit*, *Unassigned*, and *other category* with separate data validations and updates
-   - If From category To another category, determine if the allocation removes the From category's "fully funded" status
-4. Determine if To category becomes fully funded
-5. Depending on the above conditions, update:
-   - Total assets, unassigned funds, fully funded status, and/or available funds
+    1. Request and validate To & From categories, note/memo, and date
+    2. Set allocation amount
+       - Check if the request is coming from allocate.html or from the "fully fund" money symbol displayed next to category names
+       - If symbol: calculate how much is needed to fully fund
+       - Otherwise set amount to user input from allocate.html
+    3. Treat *Deposit*, *Unassigned*, and *other category* with separate data validations and updates
+       - If From category To another category, determine if the allocation removes the From category's "fully funded" status
+    4. Determine if To category becomes fully funded
+    5. Depending on the above conditions, update:
+       - Total assets, unassigned funds, fully funded status, and/or available funds
 
 #### GET
-1. Render template
+    1. Render template
 
 
 ### Transactions (History)
 #### GET
-1. Get user's transaction and allocation history for the current budget
-2. Get user's category "active/disabled" status
-3. Render template
+    1. Get user's transaction and allocation history for the current budget
+    2. Get user's category "active/disabled" status
+    3. Render template
 
 
 ### Settings / Usage
 #### POST
-1. Create new budget
-   - Update session cookies
-   - Create *Unassigned* and *Deposit* categories in the budget for processing and holding externally deposited and unallocated funds
-   - Update user's budget count
-2. Switch between budgets
-   - Almost every SQLite query in Python references the session cookie for the user's selected budget
-   - Simply update this and the "selected_bud" field in the users table
-3. Delete budgets
-   - Full send
-4. Reset budgets
-   - Retaining groups, categories, and payees
-   - Deleting all allocations, transactions, goals, etc.
-   - (Mostly awesome for me because I'm a newb at debugging and now I don't have to DELETE FROM or DROP all of my tables every 5 min XD)
-3. Edit payees
-4. Reactivate individual group categories
-   - Displays again in the budget table
-   - Shows as active in transaction/allocation history tables
-5. Reactivate entire budget groups and their categories
-   - Same as above
-6. Reset password
-   - Similar to Login route
-7. Most subroutes redirect to /settings
+    1. Create new budget
+       - Update session cookies
+       - Create *Unassigned* and *Deposit* categories in the budget for processing and holding externally deposited and unallocated funds
+       - Update user's budget count
+    2. Switch between budgets
+       - Almost every SQLite query in Python references the session cookie for the user's selected budget
+       - Simply update this and the "selected_bud" field in the users table
+    3. Delete budgets
+       - Full send
+    4. Reset budgets
+       - Retaining groups, categories, and payees
+       - Deleting all allocations, transactions, goals, etc.
+       - (Mostly awesome for me because I'm a newb at debugging and now I don't have to DELETE FROM or DROP all of my tables every 5 min XD)
+    3. Edit payees
+    4. Reactivate individual group categories
+       - Displays again in the budget table
+       - Shows as active in transaction/allocation history tables
+    5. Reactivate entire budget groups and their categories
+       - Same as above
+    6. Reset password
+       - Similar to Login route
+    7. Most subroutes redirect to /settings
 
 
 ### Settings
 #### GET
-1. Select from database:
-   - Budgets
-   - Payees
-   - Deactivated groups and their categories
-   - Deactivated categories that are in active groups
-   - User information
-2. Redirect to /index
+    1. Select from database:
+       - Budgets
+       - Payees
+       - Deactivated groups and their categories
+       - Deactivated categories that are in active groups
+       - User information
+    2. Redirect to /index
 
 ### Logout
-1. Clear session files
-2. Redirect to /index
+    1. Clear session files
+    2. Redirect to /index
 
