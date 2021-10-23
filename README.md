@@ -71,19 +71,21 @@ via *GET* or *POST* with responses delivered using *redirect* or *render_templat
 In order to develop a fully functioning web application within the parameters of the course's teachings, I have used part of the CS50x
 Week 9 project, Finance, source code in the first 42 lines of my Python code. This source code performs 3 primary functions:
 
-    1. Configure the server to auto-update whenever changes are made within the flask framework (application.py, static files, and/or templates)
-    2. Prevents response headers from being cached (Likely to protect us newbs from exposing vulnerable info...? idfk)
-    3. Configures the session to my own filesystem rather than signed cookies (So that I can easily store/retrieve into/from my SQLite database)
+1. Configure the server to auto-update whenever changes are made within the flask framework (application.py, static files, and/or templates)
+2. Prevents response headers from being cached (Likely to protect us newbs from exposing vulnerable info...? idfk)
+3. Configures the session to my own filesystem rather than signed cookies (So that I can easily store/retrieve into/from my SQLite database)
 
 The first 42 lines also contains code that I, however, am comfortable with, but are nearly identical due to the Flask framework protocol:
-    1. Importing libraries
-    2. Connecting to the SQLite database
-    3. Configuring the Flask app
+
+1. Importing libraries
+2. Connecting to the SQLite database
+3. Configuring the Flask app
 
 In addition to these 42 lines is a *helpers.py* file from which 2 functions are used from the CS50x Finance source code.
-    1. login_required(f)
+
+1. login_required(f)
        - Called upon as the first function within every route that requires the user to be logged in in order to run by checking if the *user_id* has been stored in the session cookies
-    1. usd(value)
+2. usd(value)
        - Performs Jinja2 formating on integers and floats/reals into a 2-decimal dollar-currency
 
 Aside from these two crutches, the remaining 958 lines of Python, 924 lines of HTML, proprietary CSS file, all Javascript, and the entire
@@ -100,14 +102,15 @@ the display property between "none" and "", depending on the element's value upo
 The second function interacts with the category lines in the budget table and uses data regarding the category's financial goal, goal due date, available funds,
 and amount funded since the last due date as arguments. This proved to be one of the more challenging objectives in replicating [YNAB's](www.youneedabudget) design.
 It performs the following:
-    1. Toggle the available funds column background color in the main budget table between green, yellow, grey, and none
-    2. Display a check mark icon when the category is fully funded
-       - Turns green when fully funded
-       - Remains green as the funds are spent (Goals are based on the assumption category funds are allocated for spending in a particular area)
-         - A "savings" goal would simply compound the "available" funds while resetting the "funded" amount per period to 0 upon the passing of each due day
-       - Back to yellow if funds are allocated *away* from the category to another category, effectively reducing the funded amount to that goal
-       - Grey when a fully funded category's funds are fully spent
-    3. Display a green money symbol button, that when clicked, fully funds the respective category goal
+
+1. Toggle the available funds column background color in the main budget table between green, yellow, grey, and none
+2. Display a check mark icon when the category is fully funded
+   - Turns green when fully funded
+   - Remains green as the funds are spent (Goals are based on the assumption category funds are allocated for spending in a particular area)
+     - A "savings" goal would simply compound the "available" funds while resetting the "funded" amount per period to 0 upon the passing of each due day
+   - Back to yellow if funds are allocated *away* from the category to another category, effectively reducing the funded amount to that goal
+   - Grey when a fully funded category's funds are fully spent
+3. Display a green money symbol button, that when clicked, fully funds the respective category goal
 
 
 ### SQLite Database
