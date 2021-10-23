@@ -142,44 +142,44 @@ To mitigate against SQL injection attacks, every SQLite query in my Python code 
 ## Route Documentation
 
 ### Index
-#### GET Only
-1. Determine if user has any budgets
-2. What budget the user was viewing during their last session
-3. Perform category goal resets based on due date
-   - Updates due month, funded amount, and goal_met bool
-4. Extract user's current budget, groups, and categories
+    #### GET Only
+    1. Determine if user has any budgets
+    2. What budget the user was viewing during their last session
+    3. Perform category goal resets based on due date
+       - Updates due month, funded amount, and goal_met bool
+    4. Extract user's current budget, groups, and categories
 
 
 ### Index / Usage
-#### POST Only
-1. Add budget groups
-   - Perform basic user input validation
-2. Add categories for each group
-   - Name
-   - Goal
-   - Goal due day
-3. Edit categories
-   - Name
-   - Goal
-   - Due day
-   - Remove goal &/or due day
-   - Redirect to "goal_check" route to determine if a reset is warranted
-4. Deactivate categories
-   - Still shows in transaction/allocation history tables to preserve accounting accuracy but is indicated as inactive
-5. Deactivate groups
-   - Also deactivates all categories within the group
+    #### POST Only
+    1. Add budget groups
+       - Perform basic user input validation
+    2. Add categories for each group
+       - Name
+       - Goal
+       - Goal due day
+    3. Edit categories
+       - Name
+       - Goal
+       - Due day
+       - Remove goal &/or due day
+       - Redirect to "goal_check" route to determine if a reset is warranted
+    4. Deactivate categories
+       - Still shows in transaction/allocation history tables to preserve accounting accuracy but is indicated as inactive
+    5. Deactivate groups
+       - Also deactivates all categories within the group
 
 
 ### Login
-#### POST
-1. Validate that username exists in *users* table
-2. Uses Werkzeug utility to validate hashed password
-3. Set session cookies into filesystem
-4. Welcome first-time user with unique flashed message
-5. Welcome revisiting users by their first name
+    #### POST
+    1. Validate that username exists in *users* table
+    2. Uses Werkzeug utility to validate hashed password
+    3. Set session cookies into filesystem
+    4. Welcome first-time user with unique flashed message
+    5. Welcome revisiting users by their first name
 
-#### GET
-1. Render template
+    #### GET
+    1. Render template
 
 
 ### Goal Check
