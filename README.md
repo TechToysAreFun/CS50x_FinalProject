@@ -70,9 +70,9 @@ via *GET* or *POST* with responses delivered using *redirect* or *render_templat
 
 In order to develop a fully functioning web application within the parameters of the course's teachings, I have used part of the CS50x
 Week 9 project, Finance, source code in the first 42 lines of my Python code. This source code performs 3 primary functions:
-    1. Configure the server to auto-update whenever changes are made within the flask framework (application.py, static files, and/or templates)
-    2. Prevents response headers from being cached (Likely to protect us newbs from exposing vulnerable info...? idfk)
-    3. Configures the session to my own filesystem rather than signed cookies (So that I can easily store/retrieve into/from my SQLite database)
+1. Configure the server to auto-update whenever changes are made within the flask framework (application.py, static files, and/or templates)
+2. Prevents response headers from being cached (Likely to protect us newbs from exposing vulnerable info...? idfk)
+3. Configures the session to my own filesystem rather than signed cookies (So that I can easily store/retrieve into/from my SQLite database)
 
 The first 42 lines also contains code that I, however, am comfortable with, but are nearly identical due to the Flask framework protocol:
     1. Importing libraries
