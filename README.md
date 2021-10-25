@@ -7,7 +7,6 @@
 My final project for CS50x is a budgeting tool inspired by the design of [You Need A Budget](www.youneedabudget). My objective with this project
 was to push my limits and create as much functionality as possible within a month. While I had aimed to incorporate Jquery and Ajax, that proved to
 a challenge for the next project. This application runs on the following technologies:
-entirely on the the following technologies:
 
 #### FRAMEWORKS
     - Flask (with Jinja2 template engine)
